@@ -11,6 +11,7 @@ The file should contain the following lines:
 5. M lines, each line represents an edge.
 
 Each line that represents an edge should contain a source vertex (between 1-N), destination vertex (between 1-N) and the capacity of the edge (a positive integer).
+
 For example an edge from vertex 5 to vertex 9 with the capacity of 12 will be written: 5 9 12.
 
 The application finds the results in two ways:
