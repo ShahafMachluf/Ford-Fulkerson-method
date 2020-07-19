@@ -14,6 +14,6 @@ Each line that represents an edge should contain a source vertex (between 1-N), 
 
 For example an edge from vertex 5 to vertex 9 with the capacity of 12 will be written: 5 9 12.
 
-The application finds the results in two ways:
+The application computes the maximum flow in two ways:
 1. By finding the augmenting path using BFS.
 2. By finding the augmenting path using greedy algorithm (variation of Dijkstra)
