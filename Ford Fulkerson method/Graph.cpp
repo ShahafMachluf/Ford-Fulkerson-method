@@ -5,19 +5,19 @@
 Graph::Graph()
 {
     m_AdjacencyMatrix = nullptr;
-    m_NumberOfVertecies = 0;
+    m_NumberOfVertices = 0;
     m_NumberOfEdges = 0;
 }
 
 Graph::Graph(Graph& i_GraphToCopy) // Graph copy constructor
 {
     m_NumberOfEdges = i_GraphToCopy.m_NumberOfEdges;
-    m_NumberOfVertecies = i_GraphToCopy.m_NumberOfVertecies;
-    m_AdjacencyMatrix = new int* [m_NumberOfVertecies];
-    for (int i = 0; i < m_NumberOfVertecies; i++) // copy adjacency matrix values
+    m_NumberOfVertices = i_GraphToCopy.m_NumberOfVertices;
+    m_AdjacencyMatrix = new int* [m_NumberOfVertices];
+    for (int i = 0; i < m_NumberOfVertices; i++) // copy adjacency matrix values
     {
-        m_AdjacencyMatrix[i] = new int[m_NumberOfVertecies];
-        for (int j = 0; j < m_NumberOfVertecies; j++)
+        m_AdjacencyMatrix[i] = new int[m_NumberOfVertices];
+        for (int j = 0; j < m_NumberOfVertices; j++)
         {
              m_AdjacencyMatrix[i][j] = i_GraphToCopy.m_AdjacencyMatrix[i][j];
         }
@@ -29,20 +29,20 @@ Graph::Graph(ifstream& i_graphParameters, int& o_StartingVertex, int& o_EndVerte
     int numberOfEdges,sourceVertex, destinationVertex, edgeCapacity;
     char lineFromFile[256], stringToConvertToInt[256];
     List<int> edge;
-    i_graphParameters.getline(lineFromFile, 256); // get number of vertecies
+    i_graphParameters.getline(lineFromFile, 256); // get number of vertices
     strcpy(lineFromFile, MainUtilities::CheckSingleNumberInput(lineFromFile)); // validate input
-    m_NumberOfVertecies = atoi(lineFromFile);
-    if (m_NumberOfVertecies < 2) // check that there are at least 2 vertecies
+    m_NumberOfVertices = atoi(lineFromFile);
+    if (m_NumberOfVertices < 2) // check that there are at least 2 vertices
     {
         cout << "Invalid input" << endl;
         exit(1);
     }
-    MakeEmptyGraph(m_NumberOfVertecies); // initiate empty graph
+    MakeEmptyGraph(m_NumberOfVertices); // initiate empty graph
     i_graphParameters.getline(lineFromFile, 256); // get number of edges
     strcpy(lineFromFile, MainUtilities::CheckSingleNumberInput(lineFromFile)); // validate input
     numberOfEdges = atoi(lineFromFile);
-    if (numberOfEdges < 0 || numberOfEdges >(m_NumberOfVertecies * m_NumberOfVertecies) - m_NumberOfVertecies) 
-        // check that the number of edges <= than n^2 - n (where n is the number of vertecies)
+    if (numberOfEdges < 0 || numberOfEdges >(m_NumberOfVertices * m_NumberOfVertices) - m_NumberOfVertices) 
+        // check that the number of edges <= than n^2 - n (where n is the number of vertices)
     {
         cout << "Invalid input" << endl;
         exit(1);
@@ -53,8 +53,8 @@ Graph::Graph(ifstream& i_graphParameters, int& o_StartingVertex, int& o_EndVerte
     i_graphParameters.getline(lineFromFile, 256); // get end vertex
     strcpy(lineFromFile, MainUtilities::CheckSingleNumberInput(lineFromFile)); // validate input
     o_EndVertex = atoi(lineFromFile) - 1;
-    if (o_StartingVertex + 1 > m_NumberOfVertecies || o_EndVertex + 1 > m_NumberOfVertecies) 
-        // check that the start and end vertecies are in range of the number of vertecies
+    if (o_StartingVertex + 1 > m_NumberOfVertices || o_EndVertex + 1 > m_NumberOfVertices) 
+        // check that the start and end vertices are in range of the number of vertices
     {
         cout << "Invalid input" << endl;
         exit(1);
@@ -96,7 +96,7 @@ Graph::Graph(ifstream& i_graphParameters, int& o_StartingVertex, int& o_EndVerte
         if (sourceVertex > numberOfEdges || destinationVertex > numberOfEdges ||
             sourceVertex == destinationVertex || edgeCapacity < 0 || IsAdjacent(sourceVertex - 1, destinationVertex - 1))
             // check that the edge is not already in the graph, that there is no self loop, 
-            //that the edge capacity > 0 and that the vertecies are in range in the number of vertecies
+            //that the edge capacity > 0 and that the vertices are in range in the number of vertices
         {
             cout << "Invalid input" << endl;
             exit(1);
@@ -109,7 +109,7 @@ Graph::Graph(ifstream& i_graphParameters, int& o_StartingVertex, int& o_EndVerte
 
 Graph::~Graph()
 {
-    for (int i = 0; i < m_NumberOfVertecies; i++)
+    for (int i = 0; i < m_NumberOfVertices; i++)
     {
         delete[] m_AdjacencyMatrix[i];
     }
@@ -117,9 +117,9 @@ Graph::~Graph()
     delete[] m_AdjacencyMatrix;
 }
 
-void Graph::MakeEmptyGraph(int i_NumberOfVertices) // initiate an empty graph with i_NumberOfVertices vertecies
+void Graph::MakeEmptyGraph(int i_NumberOfVertices) // initiate an empty graph with i_NumberOfVertices vertices
 {
-    m_NumberOfVertecies = i_NumberOfVertices;
+    m_NumberOfVertices = i_NumberOfVertices;
     m_AdjacencyMatrix = new int*[i_NumberOfVertices];
     for (int i = 0; i < i_NumberOfVertices; i++)
     {
@@ -131,7 +131,7 @@ void Graph::MakeEmptyGraph(int i_NumberOfVertices) // initiate an empty graph wi
     }
 }
 
-bool Graph::IsAdjacent(int i_SourceVertex, int i_DestinationVertex) // checks if 2 vertecies are adjacent
+bool Graph::IsAdjacent(int i_SourceVertex, int i_DestinationVertex) // checks if 2 vertices are adjacent
 {
     return m_AdjacencyMatrix[i_SourceVertex][i_DestinationVertex] > 0;
 }
@@ -139,7 +139,7 @@ bool Graph::IsAdjacent(int i_SourceVertex, int i_DestinationVertex) // checks if
 List<int>* Graph::GetAdjList(int i_Vertex) // creates a list of the adjacents of i_Vertex
 {
     List<int>* adjList = new List<int>;
-    for (int i = 0; i < m_NumberOfVertecies; i++)
+    for (int i = 0; i < m_NumberOfVertices; i++)
     {
         if (m_AdjacencyMatrix[i_Vertex][i] > 0)
         {
@@ -172,27 +172,27 @@ void Graph::RemoveEdge(int i_SourceVertex, int i_DestinationVertex) // removes t
 void Graph::BFS(int i_StartVertex, int*& o_DistanceArray, int*& o_ParentArray)
 // runs BFS on the graph, returns distance array and parent array as output parameters
 {
-    Queue verteciesQueue;
-    int* distance = new int[m_NumberOfVertecies]; // array for distance from starting vertex
-    int* parent = new int[m_NumberOfVertecies]; // array for parents of each vertex on the shortest path from the starting vertex
+    Queue verticesQueue;
+    int* distance = new int[m_NumberOfVertices]; // array for distance from starting vertex
+    int* parent = new int[m_NumberOfVertices]; // array for parents of each vertex on the shortest path from the starting vertex
     int currentVertex;
-    for (int i = 0; i < m_NumberOfVertecies; i++) // initate arrays
+    for (int i = 0; i < m_NumberOfVertices; i++) // initate arrays
     {
         distance[i] = INF;
         parent[i] = -1;
     }
     distance[i_StartVertex] = 0;
-    verteciesQueue.Enqueue(i_StartVertex);
-    while (!verteciesQueue.IsEmpty())
+    verticesQueue.Enqueue(i_StartVertex);
+    while (!verticesQueue.IsEmpty())
     {
-        currentVertex = verteciesQueue.Dequeue();
-        for (int i = 0; i < m_NumberOfVertecies; i++)
+        currentVertex = verticesQueue.Dequeue();
+        for (int i = 0; i < m_NumberOfVertices; i++)
         {
             if (m_AdjacencyMatrix[currentVertex][i] != 0 && distance[i] == INF) // update arrayes
             {
                 distance[i] = distance[currentVertex] + 1;
                 parent[i] = currentVertex;
-                verteciesQueue.Enqueue(i);
+                verticesQueue.Enqueue(i);
             }
         }
     }
@@ -245,7 +245,7 @@ void Graph::GetMinimumCut(int i_StartingIndex,List<int>& io_SSet, List<int>& io_
     // finds min cut of the graph with max flow, and returns S set and T set as output parameters
     int *distance, *parent;
     BFS(i_StartingIndex, distance, parent);
-    for (int i = 0; i < m_NumberOfVertecies; i++)
+    for (int i = 0; i < m_NumberOfVertices; i++)
     {
         if (distance[i] != -1)
         {
@@ -265,39 +265,39 @@ Vertex* Graph::DijkstraVariationForMaxFlow(int i_StartinVertex, int*& o_ParentAr
 {
     PriorityMaxQueue maxQueue;
     Vertex currentVertex;
-    Vertex* verteciesArrayForMaxQueue = buildVerteciesArray(); // array for the priority queue
-    Vertex* verteciesArray = buildVerteciesArray(); // array for the current function
-    int* verteciesPlaceInTheHeap = new int[m_NumberOfVertecies]; // an auxiliary array which represent the index of each vertex in the array of priority queue
-    o_ParentArray = new int[m_NumberOfVertecies];
-    for (int i = 0; i < m_NumberOfVertecies; i++)
+    Vertex* verticesArrayForMaxQueue = buildVerticesArray(); // array for the priority queue
+    Vertex* verticesArray = buildVerticesArray(); // array for the current function
+    int* verticesPlaceInTheHeap = new int[m_NumberOfVertices]; // an auxiliary array which represent the index of each vertex in the array of priority queue
+    o_ParentArray = new int[m_NumberOfVertices];
+    for (int i = 0; i < m_NumberOfVertices; i++)
     {
-        verteciesPlaceInTheHeap[i] = i;
+        verticesPlaceInTheHeap[i] = i;
         o_ParentArray[i] = -1;
     }
     // set the current flow to the starting index as INF (in order to delete it first from the priority queue)
-    verteciesArray[i_StartinVertex].SetFlow(INF);
-    verteciesArrayForMaxQueue[i_StartinVertex].SetFlow(INF);
+    verticesArray[i_StartinVertex].SetFlow(INF);
+    verticesArrayForMaxQueue[i_StartinVertex].SetFlow(INF);
 
-    maxQueue.Build(verteciesArrayForMaxQueue, m_NumberOfVertecies, verteciesPlaceInTheHeap); // build the priority queue
+    maxQueue.Build(verticesArrayForMaxQueue, m_NumberOfVertices, verticesPlaceInTheHeap); // build the priority queue
     while (!maxQueue.IsEmpty())
     {
-        currentVertex = maxQueue.DeleteMax(verteciesPlaceInTheHeap);
-        for (int i = 0; i < m_NumberOfVertecies; i++)
+        currentVertex = maxQueue.DeleteMax(verticesPlaceInTheHeap);
+        for (int i = 0; i < m_NumberOfVertices; i++)
         {
-            if (verteciesPlaceInTheHeap[i] >= 0 && this->IsAdjacent(currentVertex.GetIndex(), i))
+            if (verticesPlaceInTheHeap[i] >= 0 && this->IsAdjacent(currentVertex.GetIndex(), i))
             {
                 // check if needed to update the flow to a vertex if it is an adjacent of the current vertex and it is still in the priority queue
-                Relax(verteciesArray[currentVertex.GetIndex()], verteciesArray[i], maxQueue, o_ParentArray, verteciesPlaceInTheHeap);
+                Relax(verticesArray[currentVertex.GetIndex()], verticesArray[i], maxQueue, o_ParentArray, verticesPlaceInTheHeap);
             }
         }
     }
 
-    delete[]verteciesPlaceInTheHeap;
-    delete[]verteciesArrayForMaxQueue;
-    return verteciesArray;
+    delete[]verticesPlaceInTheHeap;
+    delete[]verticesArrayForMaxQueue;
+    return verticesArray;
 }
 
-void Graph::Relax(Vertex& i_SourceVertex, Vertex& i_DestinationVertex, PriorityMaxQueue& i_MaxQueue, int* i_ParentArray, int* io_VerteciesPlaceInTheHeap)
+void Graph::Relax(Vertex& i_SourceVertex, Vertex& i_DestinationVertex, PriorityMaxQueue& i_MaxQueue, int* i_ParentArray, int* io_VerticesPlaceInTheHeap)
 {
     int minimumFlow;
     if (i_SourceVertex.GetCurrentFlow() == INF || i_SourceVertex.GetCurrentFlow() > m_AdjacencyMatrix[i_SourceVertex.GetIndex()][i_DestinationVertex.GetIndex()])
@@ -321,14 +321,14 @@ void Graph::Relax(Vertex& i_SourceVertex, Vertex& i_DestinationVertex, PriorityM
         // update i_DestinationVertex parent to i_SourceVertex
         i_ParentArray[i_DestinationVertex.GetIndex()] = i_SourceVertex.GetIndex();
         // increase the key of i_DestinationVertex in the priority queue
-        i_MaxQueue.IncreaseKey(io_VerteciesPlaceInTheHeap[i_DestinationVertex.GetIndex()] , i_DestinationVertex.GetCurrentFlow(), io_VerteciesPlaceInTheHeap);
+        i_MaxQueue.IncreaseKey(io_VerticesPlaceInTheHeap[i_DestinationVertex.GetIndex()] , i_DestinationVertex.GetCurrentFlow(), io_VerticesPlaceInTheHeap);
     }
 }
 
-Vertex* Graph::buildVerteciesArray()
+Vertex* Graph::buildVerticesArray()
 {
-    Vertex* resultArray = new Vertex[m_NumberOfVertecies];
-    for (int i = 0; i < m_NumberOfVertecies; i++)
+    Vertex* resultArray = new Vertex[m_NumberOfVertices];
+    for (int i = 0; i < m_NumberOfVertices; i++)
     {
         resultArray[i].SetIndex(i);
         resultArray[i].SetFlow(0); // initiate each vertex flow to 0
@@ -337,7 +337,7 @@ Vertex* Graph::buildVerteciesArray()
     return resultArray;
 }
 
-int Graph::GetNumberOfVertecies() // return the number of vertecies of the graph
+int Graph::GetNumberOfVertices() // return the number of vertices of the graph
 {
-    return m_NumberOfVertecies;
+    return m_NumberOfVertices;
 }

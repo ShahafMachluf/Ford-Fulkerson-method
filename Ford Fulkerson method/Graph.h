@@ -9,7 +9,7 @@ class Graph
 {
 private:
     int m_NumberOfEdges;
-    int m_NumberOfVertecies;
+    int m_NumberOfVertices;
 public:int** m_AdjacencyMatrix;
 
 public:
@@ -18,7 +18,7 @@ public:
     Graph(ifstream& i_graphParameters, int& o_StartingVertex, int& o_EndVertex);
     ~Graph();
     void SetNumberOfEdges(int i_NumberOfEdges);
-    int GetNumberOfVertecies();
+    int GetNumberOfVertices();
     void MakeEmptyGraph(int i_NumberOfVertices);
     bool IsAdjacent(int i_SourceVertex, int i_DestinationVertex);
     List<int>* GetAdjList(int i_Vertex);
@@ -29,6 +29,6 @@ public:
     void UpdateResidualGraphCapacity(int i_StartingVertex, int i_EndVertex, int* i_ParentArray, int i_Flow);
     void GetMinimumCut(int i_StartingIndex, List<int>& io_SSet, List<int>& io_TSet);
     Vertex* DijkstraVariationForMaxFlow(int i_StartinVertex, int*& o_ParentArray);
-    Vertex* buildVerteciesArray();
-    void Relax(Vertex& i_SourceVertex, Vertex& i_DestinationVertex, PriorityMaxQueue& i_MaxQueue, int* i_ParentArray, int* io_VerteciesPlaceInTheHeap);
+    Vertex* buildVerticesArray();
+    void Relax(Vertex& i_SourceVertex, Vertex& i_DestinationVertex, PriorityMaxQueue& i_MaxQueue, int* i_ParentArray, int* io_VerticesPlaceInTheHeap);
 };

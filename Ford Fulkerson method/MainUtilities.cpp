@@ -30,24 +30,24 @@ void MainUtilities::RunFordFulkersonWithDijkstra(Graph& i_Graph, int i_StartingV
     Graph* residualGraph = new Graph(i_Graph); // holds the residual graph
     Graph* residualGraphCopy = new Graph(*residualGraph);// holds a copy of the residual graph for Dijkstra algorithm for max flow
     int* parentArray; // holds the current parent array after Dijkstra run
-    Vertex* verteciesAfterDijkstra; // holds the vertecies array that returns from Dijkstra
-    verteciesAfterDijkstra = residualGraphCopy->DijkstraVariationForMaxFlow(i_StartingVertex, parentArray);
+    Vertex* verticesAfterDijkstra; // holds the vertices array that returns from Dijkstra
+    verticesAfterDijkstra = residualGraphCopy->DijkstraVariationForMaxFlow(i_StartingVertex, parentArray);
     // this loop is running while there is a path from the starting vertex to the end vertex in the residual graph
-    while (verteciesAfterDijkstra[i_EndVertex].GetCurrentFlow() > 0)
+    while (verticesAfterDijkstra[i_EndVertex].GetCurrentFlow() > 0)
     {
         numberOfIterations++;
-        pathFlow = verteciesAfterDijkstra[i_EndVertex].GetCurrentFlow(); // gets the flow that reached to the end vertex
+        pathFlow = verticesAfterDijkstra[i_EndVertex].GetCurrentFlow(); // gets the flow that reached to the end vertex
         maxFlow += pathFlow; // add this flow to max flow
         residualGraph->UpdateResidualGraphCapacity(i_StartingVertex, i_EndVertex, parentArray, pathFlow); // update the residual graph edges capacity after streaming
         delete[]parentArray;
         delete residualGraphCopy;
-        delete[]verteciesAfterDijkstra;
+        delete[]verticesAfterDijkstra;
         residualGraphCopy = new Graph(*residualGraph); // create a copy of the updated residual graph
-        verteciesAfterDijkstra = residualGraphCopy->DijkstraVariationForMaxFlow(i_StartingVertex, parentArray); // run Dijkstra again
+        verticesAfterDijkstra = residualGraphCopy->DijkstraVariationForMaxFlow(i_StartingVertex, parentArray); // run Dijkstra again
     }
     delete residualGraphCopy;
     delete[]parentArray;
-    delete verteciesAfterDijkstra; 
+    delete verticesAfterDijkstra; 
 
     List<int> SList, TList;
     residualGraph->GetMinimumCut(i_StartingVertex, SList, TList); // find min cut

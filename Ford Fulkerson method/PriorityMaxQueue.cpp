@@ -34,7 +34,7 @@ int PriorityMaxQueue::Right(int i_Node)// return the index of the right son
 	return (2 * i_Node + 2);
 }
 
-void PriorityMaxQueue::FixHeap(int node,int* io_VerteciesPlaceInTheHeap)
+void PriorityMaxQueue::FixHeap(int node,int* io_VerticesPlaceInTheHeap)
 {
 	int max = node;
 	int left = Left(node);
@@ -58,16 +58,16 @@ void PriorityMaxQueue::FixHeap(int node,int* io_VerteciesPlaceInTheHeap)
 		if (max != node)
 		{
 			// update places in the auxiliary array
-			io_VerteciesPlaceInTheHeap[m_Data[node].GetIndex()] = max;
-			io_VerteciesPlaceInTheHeap[m_Data[max].GetIndex()] = node;
+			io_VerticesPlaceInTheHeap[m_Data[node].GetIndex()] = max;
+			io_VerticesPlaceInTheHeap[m_Data[max].GetIndex()] = node;
 			// swap the elements and continue fixing the heap if needed
 			Swap(&m_Data[node], &m_Data[max]);
-			FixHeap(max, io_VerteciesPlaceInTheHeap);
+			FixHeap(max, io_VerticesPlaceInTheHeap);
 		}
 	}
 }
 
-Vertex PriorityMaxQueue::DeleteMax(int* io_VerteciesPlaceInTheHeap)
+Vertex PriorityMaxQueue::DeleteMax(int* io_VerticesPlaceInTheHeap)
 {
 	if (m_CurrentHeapSize < 1)
 	{
@@ -78,11 +78,11 @@ Vertex PriorityMaxQueue::DeleteMax(int* io_VerteciesPlaceInTheHeap)
 	Vertex max = m_Data[0];
 	m_CurrentHeapSize--;
 	// update places in the auxiliary array
-	io_VerteciesPlaceInTheHeap[m_Data[0].GetIndex()] = -1; // mark element that is out of the heap
-	io_VerteciesPlaceInTheHeap[m_Data[m_CurrentHeapSize].GetIndex()] = 0; 
+	io_VerticesPlaceInTheHeap[m_Data[0].GetIndex()] = -1; // mark element that is out of the heap
+	io_VerticesPlaceInTheHeap[m_Data[m_CurrentHeapSize].GetIndex()] = 0; 
 	m_Data[0] = m_Data[m_CurrentHeapSize];
 	// fix the updated heap
-	FixHeap(0, io_VerteciesPlaceInTheHeap);
+	FixHeap(0, io_VerticesPlaceInTheHeap);
 	return max;
 }
 
@@ -98,7 +98,7 @@ void PriorityMaxQueue:: Swap(Vertex* i_FirstEdge, Vertex* i_SecondEdge) // swap 
 	*i_SecondEdge = tempVertex;
 }
 
-void PriorityMaxQueue::Build(Vertex* i_Array, int i_ArraySize, int* io_VerteciesPlaceInTheHeap) // build heap from array using floyd algorithm
+void PriorityMaxQueue::Build(Vertex* i_Array, int i_ArraySize, int* io_VerticesPlaceInTheHeap) // build heap from array using floyd algorithm
 {
 	m_CurrentHeapSize = m_MaxHeapSize = i_ArraySize;
 
@@ -107,20 +107,20 @@ void PriorityMaxQueue::Build(Vertex* i_Array, int i_ArraySize, int* io_Vertecies
 
 	for (int i = m_CurrentHeapSize / 2 - 1; i >= 0; i--)
 	{
-		FixHeap(i, io_VerteciesPlaceInTheHeap);
+		FixHeap(i, io_VerticesPlaceInTheHeap);
 	}
 }
 
-void PriorityMaxQueue::IncreaseKey(int i_Place, int i_NewKey, int* io_VerteciesPlaceInTheHeap)
+void PriorityMaxQueue::IncreaseKey(int i_Place, int i_NewKey, int* io_VerticesPlaceInTheHeap)
 {
 	m_Data[i_Place].SetFlow(i_NewKey);
 	while (i_Place != 0 && m_Data[Parent(i_Place)].GetCurrentFlow() < m_Data[i_Place].GetCurrentFlow())
 	{
-		int parentLocationInHeap = io_VerteciesPlaceInTheHeap[m_Data[Parent(i_Place)].GetIndex()];
-		int sontLocationInHeap = io_VerteciesPlaceInTheHeap[m_Data[i_Place].GetIndex()];
+		int parentLocationInHeap = io_VerticesPlaceInTheHeap[m_Data[Parent(i_Place)].GetIndex()];
+		int sontLocationInHeap = io_VerticesPlaceInTheHeap[m_Data[i_Place].GetIndex()];
 		// update places in the auxiliary array
-		io_VerteciesPlaceInTheHeap[m_Data[i_Place].GetIndex()] = parentLocationInHeap;
-		io_VerteciesPlaceInTheHeap[m_Data[Parent(i_Place)].GetIndex()] = sontLocationInHeap;
+		io_VerticesPlaceInTheHeap[m_Data[i_Place].GetIndex()] = parentLocationInHeap;
+		io_VerticesPlaceInTheHeap[m_Data[Parent(i_Place)].GetIndex()] = sontLocationInHeap;
 		// swap elements in the heap
 		Swap(&m_Data[i_Place], &m_Data[Parent(i_Place)]);
 		i_Place = Parent(i_Place);

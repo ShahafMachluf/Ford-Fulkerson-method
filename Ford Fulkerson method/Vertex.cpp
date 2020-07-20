@@ -16,12 +16,12 @@ void Vertex::SetFlow(int i_NewFlow) // set current flow to vertex
     m_CurrentFlow = i_NewFlow;
 }
 
-void Vertex::SetIndex(int i_Index) // set index of the vertex in an array of vertecies
+void Vertex::SetIndex(int i_Index) // set index of the vertex in an array of vertices
 {
     m_VertexIndex = i_Index;
 }
 
-int Vertex::GetIndex() // get the index of the vertex in an array of vertecies
+int Vertex::GetIndex() // get the index of the vertex in an array of vertices
 {
     return m_VertexIndex;
 }
